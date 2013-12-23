@@ -59,6 +59,7 @@ describe('ram node embedded object cache tests', function () {
     ram.del(firstObject, function (err) {
 
       expect(ram._cache.length).to.eql(0);
+      expect(ram.len()).to.eql(0);
 
       return done();
 
@@ -66,20 +67,48 @@ describe('ram node embedded object cache tests', function () {
 
   });
 
-  it('should add 100 items to cache', function (done) {
+  it('should add 2000 items to cache', function (done) {
 
-    for (var i=0;i<100;++i) {
+    for (var i=0;i<2000;++i) {
 
       ram.add({item: i}, function (data) {
         expect(data.item).to.eql(i);
       });
 
-      if (ram.len() == 100) {
+      if (ram.len() == 2000) {
         return done();
       };
 
     };
 
   });
+
+  it('should get 1000 items from cache', function (done) {
+
+    for (var i=1000;i<2000;++i) {
+
+      ram.get({item: i}, function (data) {
+        if (data && data.hasOwnProperty('item')) {
+          expect(data.item).to.eql(i);
+        }
+      });
+
+      if (i == 1999) {
+        return done();
+      };
+
+    };
+
+  });
+
+  it('should reset the cache to an empty array', function (done) {
+
+    ram.reset();
+
+    expect(ram.len()).to.eql(0);
+
+    return done();
+
+  })
 
 });

@@ -4,7 +4,7 @@
   "description": "small object store",
   "main": "index.js",
   "scripts": {
-    "test": "mocha test -R spec -t 4000"
+    "test": "mocha test -R spec -t 4000000"
   },
   "repository": {
     "type": "git",
